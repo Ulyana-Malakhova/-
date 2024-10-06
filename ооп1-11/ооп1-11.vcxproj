@@ -128,7 +128,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EmissionData.cpp" />
+    <ClCompile Include="EmissionLoggerDelegate.cpp" />
     <ClCompile Include="EmissionMonitor.cpp" />
+    <ClCompile Include="EmissionMonitorProxy.cpp" />
     <ClCompile Include="IndustrialFacility.cpp" />
     <ClCompile Include="Notification.cpp" />
     <ClCompile Include="Report.cpp" />
@@ -138,7 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EmissionData.h" />
+    <ClInclude Include="EmissionLoggerDelegate.h" />
     <ClInclude Include="EmissionMonitor.h" />
+    <ClInclude Include="EmissionMonitorProxy.h" />
     <ClInclude Include="IAlertSystem.h" />
     <ClInclude Include="IComplianceChecker.h" />
     <ClInclude Include="IDataLogger.h" />
