@@ -25,3 +25,7 @@ vector<EmissionData>::const_iterator Report::begin() {
 vector<EmissionData>::const_iterator Report::end() {
     return emissionData.cend();
 }
+
+Report* Report::clone() const {
+    return new Report(*this);
+}

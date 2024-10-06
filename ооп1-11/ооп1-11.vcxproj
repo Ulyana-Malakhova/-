@@ -128,11 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EmissionData.cpp" />
+    <ClCompile Include="EmissionDataBuilder.cpp" />
+    <ClCompile Include="EmissionDataPool.cpp" />
     <ClCompile Include="EmissionLoggerDelegate.cpp" />
     <ClCompile Include="EmissionMonitor.cpp" />
     <ClCompile Include="EmissionMonitorDecorator.cpp" />
     <ClCompile Include="EmissionMonitorProxy.cpp" />
     <ClCompile Include="IndustrialFacility.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Notification.cpp" />
     <ClCompile Include="NotificationAdapter.cpp" />
     <ClCompile Include="Report.cpp" />
@@ -142,6 +145,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EmissionData.h" />
+    <ClInclude Include="EmissionDataBuilder.h" />
+    <ClInclude Include="EmissionDataPool.h" />
     <ClInclude Include="EmissionLoggerDelegate.h" />
     <ClInclude Include="EmissionMonitor.h" />
     <ClInclude Include="EmissionMonitorDecorator.h" />
@@ -150,6 +155,7 @@
     <ClInclude Include="IComplianceChecker.h" />
     <ClInclude Include="IDataLogger.h" />
     <ClInclude Include="IndustrialFacility.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Notification.h" />
     <ClInclude Include="NotificationAdapter.h" />
     <ClInclude Include="Report.h" />

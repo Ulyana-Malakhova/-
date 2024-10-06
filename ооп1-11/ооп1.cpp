@@ -1,40 +1,53 @@
-﻿#include "Report.h"
-#include "User.h"
-#include "IndustrialFacility.h"
-#include "Notification.h"
-#include "EmissionMonitor.h"
+﻿#include "User.h"
+#include "Report.h"
+#include "EmissionDataPool.h"
 #include "EmissionData.h"
-#include "NotificationAdapter.h"
-#include "EmissionMonitorDecorator.h"
+#include "Logger.h"
+#include "EmissionDataBuilder.h"
 #include <iostream>
+
+Logger* Logger::instance = nullptr;
 
 int main() {
     // Создание объектов
+    //Объявление объекта Singleton
+    Logger& logger = Logger::getInstance();
     //Пользователь(id, имя, должность)
     User userAdmin("1", "AdminUser", "Admin");
     userAdmin.login();
-    // Монитор выбросов(id, расположение)
-    EmissionMonitor originalMonitor("M001", "Factory A");
-    EmissionMonitorDecorator decoratedMonitor(originalMonitor);
-    decoratedMonitor.startMonitoring();
-    // Данные о выбросах(дата, тип загрязнения, концентрация, единица измерения)
-    EmissionData data1("2023-10-06T07:00:00", "CO2", 95.0, "ppm");
-    EmissionData data2("2023-10-06T08:00:00", "NO2", 85.0, "ppm");
-    // Отчет(дата, id)
-    Report report( "2023-10-06", "F001");
-    report.addEmissionData(data1);
-    report.addEmissionData(data2);
-    report.generateReport();
-    // Использование итератора
-    for (const auto& data : report) {
-        std::cout << data.toString() << std::endl;
+    // Builder для данных о выбросах
+    EmissionDataBuilder builder;
+    EmissionData data1 = builder.setTimestamp("2023-10-06T07:00:00")
+        .setPollutantType("CO2")
+        .setConcentration(95.0)
+        .setUnit("ppm")
+        .build();
+    EmissionData data2 = builder.setTimestamp("2023-10-06T08:00:00")
+        .setPollutantType("NO2")
+        .setConcentration(85.0)
+        .setUnit("ppm")
+        .build();
+    // Object Pool
+    EmissionDataPool pool;
+    try {
+        auto data3 = pool.acquire();
+        pool.release(data3); 
+        // Отчет(id, id объекта)
+        Report report("R001", "F001");
+        report.addEmissionData(data1);
+        report.addEmissionData(data2);
+        report.generateReport();
+        // Логирование
+        logger.log(data1.toString());
+        logger.log(data2.toString());
+        // Клонирование отчета
+        Report* clonedReport = report.clone();
+        clonedReport->generateReport(); 
+        delete clonedReport; 
     }
-    // Уведомление(id, сообщение, серьезность, дата)
-    Notification notification("N001", "High CO2 levels detected", "High", "2023-10-06T07:10:00");
-    //Реализация Адаптера
-    NotificationAdapter notificationLogger(notification);
-    notificationLogger.logData(data1.toString());
-    decoratedMonitor.stopMonitoring();
+    catch (const std::runtime_error& e) {
+        logger.log(e.what());
+    }
     userAdmin.logout();
     return 0;
 }
