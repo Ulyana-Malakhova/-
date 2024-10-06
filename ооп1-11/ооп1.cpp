@@ -1,11 +1,11 @@
 ﻿#include "Report.h"
 #include "User.h"
 #include "IndustrialFacility.h"
-#include "Sensor.h"
+#include "Notification.h"
 #include "EmissionMonitor.h"
 #include "EmissionData.h"
-#include "EmissionMonitorProxy.h"
-#include "EmissionLoggerDelegate.h"
+#include "NotificationAdapter.h"
+#include "EmissionMonitorDecorator.h"
 #include <iostream>
 
 int main() {
@@ -13,23 +13,28 @@ int main() {
     //Пользователь(id, имя, должность)
     User userAdmin("1", "AdminUser", "Admin");
     userAdmin.login();
-    //Промышленный объект(id, название, адресс, лимит выбросов)
-    IndustrialFacility facility("F001", "Factory A", "Central park", 100.0);
-    auto sensor = std::make_shared<EmissionMonitor>("M001", facility.getFacilitiesData());
-    // Использование прокси
-    EmissionMonitorProxy monitorProxy(sensor);
-    monitorProxy.startMonitoring();
-    //Данные о выбросах(дата, тип загрязняющего вещества, сосредоточенность, единица измерения)
-    EmissionData data("20-04-2024", "CO2", 95.0, "ppm");
-    std::cout << data.toString() << std::endl;
-    // Реализация делегирования
-    EmissionLoggerDelegate logger;
-    logger.logData(data.toString());
-    // Отчет(id, информация о выбросах)
-    Report report("R001", facility.getFacilitiesData());
-    report.addEmissionData(data);
+    // Монитор выбросов(id, расположение)
+    EmissionMonitor originalMonitor("M001", "Factory A");
+    EmissionMonitorDecorator decoratedMonitor(originalMonitor);
+    decoratedMonitor.startMonitoring();
+    // Данные о выбросах(дата, тип загрязнения, концентрация, единица измерения)
+    EmissionData data1("2023-10-06T07:00:00", "CO2", 95.0, "ppm");
+    EmissionData data2("2023-10-06T08:00:00", "NO2", 85.0, "ppm");
+    // Отчет(дата, id)
+    Report report( "2023-10-06", "F001");
+    report.addEmissionData(data1);
+    report.addEmissionData(data2);
     report.generateReport();
-    monitorProxy.stopMonitoring();
+    // Использование итератора
+    for (const auto& data : report) {
+        std::cout << data.toString() << std::endl;
+    }
+    // Уведомление(id, сообщение, серьезность, дата)
+    Notification notification("N001", "High CO2 levels detected", "High", "2023-10-06T07:10:00");
+    //Реализация Адаптера
+    NotificationAdapter notificationLogger(notification);
+    notificationLogger.logData(data1.toString());
+    decoratedMonitor.stopMonitoring();
     userAdmin.logout();
     return 0;
 }

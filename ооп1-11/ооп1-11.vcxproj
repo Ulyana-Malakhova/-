@@ -130,9 +130,11 @@
     <ClCompile Include="EmissionData.cpp" />
     <ClCompile Include="EmissionLoggerDelegate.cpp" />
     <ClCompile Include="EmissionMonitor.cpp" />
+    <ClCompile Include="EmissionMonitorDecorator.cpp" />
     <ClCompile Include="EmissionMonitorProxy.cpp" />
     <ClCompile Include="IndustrialFacility.cpp" />
     <ClCompile Include="Notification.cpp" />
+    <ClCompile Include="NotificationAdapter.cpp" />
     <ClCompile Include="Report.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="User.cpp" />
@@ -142,12 +144,14 @@
     <ClInclude Include="EmissionData.h" />
     <ClInclude Include="EmissionLoggerDelegate.h" />
     <ClInclude Include="EmissionMonitor.h" />
+    <ClInclude Include="EmissionMonitorDecorator.h" />
     <ClInclude Include="EmissionMonitorProxy.h" />
     <ClInclude Include="IAlertSystem.h" />
     <ClInclude Include="IComplianceChecker.h" />
     <ClInclude Include="IDataLogger.h" />
     <ClInclude Include="IndustrialFacility.h" />
     <ClInclude Include="Notification.h" />
+    <ClInclude Include="NotificationAdapter.h" />
     <ClInclude Include="Report.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="User.h" />

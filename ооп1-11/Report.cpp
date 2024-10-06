@@ -12,3 +12,16 @@ void Report::generateReport() {
 void Report::addEmissionData( EmissionData& data) {
     emissionData.push_back(data);
 }
+
+size_t Report::getSize() {
+    return emissionData.size();
+}
+
+
+vector<EmissionData>::const_iterator Report::begin() {
+    return emissionData.cbegin();
+}
+
+vector<EmissionData>::const_iterator Report::end() {
+    return emissionData.cend();
+}

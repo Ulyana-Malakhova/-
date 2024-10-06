@@ -9,7 +9,8 @@ private:
     string severity;
     string timestamp;
 public:
-    Notification(string& id, string& msg, string& sev, string& ts)
+    Notification(const string& id, const string& msg, const string& sev, const string& ts)
         : notificationID(id), message(msg), severity(sev), timestamp(ts) {}
     void sendNotification();
+    string getMessage();
 };

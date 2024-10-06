@@ -6,7 +6,7 @@
 
 using namespace std;
 class Report {
-private:
+protected:
     string reportID;
     chrono::system_clock::time_point generatedTimestamp;
     string facilityID;
@@ -14,6 +14,10 @@ private:
 public:
     Report(const string& id, const string& fid)
         : reportID(id),  facilityID(fid) {}
+    void addEmissionData( EmissionData& data);
     void generateReport();
-    void addEmissionData(EmissionData& data);
+    size_t getSize();
+    // Iterator
+    vector<EmissionData>::const_iterator begin();
+    vector<EmissionData>::const_iterator end();
 };

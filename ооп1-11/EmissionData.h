@@ -11,5 +11,5 @@ private:
 public:
     EmissionData(const string& ts, const string& pt, double con, const string& u)
         : timestamp(ts),pollutantType(pt), concentration(con), unit(u) {}
-    string toString();
+    string toString() const;
 };

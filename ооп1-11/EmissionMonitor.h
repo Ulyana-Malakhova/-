@@ -10,7 +10,7 @@ private:
 public:
     EmissionMonitor(const string& id, const string& loc)
         : monitorID(id), location(loc), status(false){}
-    void startMonitoring();
-    void stopMonitoring();
+    virtual void startMonitoring();
+    virtual void stopMonitoring();
     string getStatus();
 };
